@@ -40,7 +40,6 @@ int main(int argc, char *argv[]) {
         // Citire comanda de la tastatura
         memset(stdin_buffer, 0, BUFLEN);
         fgets(stdin_buffer, BUFLEN, stdin);
-        // scanf("%s", stdin_buffer);
 
         // Deschidere socket
         // Din cauza ca legatura cu serverul ramane activa doar 5 secunde,
