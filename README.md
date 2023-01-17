@@ -1,8 +1,74 @@
-Client Web. Comunicatie cu REST API - Protocoale de Comunicatie
-Copyright (c) 2021. MIEILĂ Eduard-Robert, 323CA
-edymieila@gmail.com
-eduard.mieila@stud.acs.upb.ro
+# Client Web REST API
 
+## Descriere generală
+Clientul rulează în linia de comandă și are ca scop autentificarea la un REST Server ce simulează o bibliotecă. Utilizatorul se poate înregistra, conecta(solicita un Session-Cookie) și deconecta de la bilioteca, poate solicita acces la date(solictă un token JWT), adăuga și sterge cărți și poate afișa informații despre o anume carte sau despre toate cărțile pe care le-a adăugat la bibliotecă. Implementarea s-a efectuat în fișierul client.c și s-a folosit biblioteca standard C, socketi Linux și biblioteca Parson pentru parsarea mesajelor JSON primite de la server.
+
+## How to use
+### Build
+    make client
+
+### Run
+    ./client
+    # sau
+    make run
+
+### Comenzi posibile
+Register:
+    
+    register
+    > username=something
+    > password=something
+
+---
+Login:
+    
+    login
+    > username=something
+    > password=something
+
+---
+Enter library:
+
+    enter_library
+
+---
+Get books:
+
+    get_books
+
+---
+Get book:
+
+    get_book
+    > id=10
+
+---
+Add book:
+
+    add_book
+    > title=Testbook
+    > author=student
+    > genre=comedy
+    > publisher=John
+    > page_count=10
+
+---
+Delete book:
+
+    delete_book
+    > id=10
+
+---
+Logout:
+
+    logout
+
+---
+Exit:
+
+    exit
+
+## Informații suplimentare despre implementare
 Clientul Web functioneaza astfel:
 1. Se citeste o comanda de la tastatura
 2. Se deschide o conexiune catre server
@@ -15,7 +81,7 @@ Clientul Web functioneaza astfel:
 
 Daca nu s-a citit o comanda cunoscuta de client, afisam un mesaj corespunzator.
 
-Comanda register:
+### Comanda register:
 - preia username-ul si parola
 - compune pe rand mesajul JSON, cererea HTTP
 - se trimite cererea, se asteapta raspuns
@@ -23,7 +89,7 @@ Comanda register:
   de confirmare, altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda login:
+### Comanda login:
 - preia username-ul si parola
 - compune pe rand mesajul JSON, cererea HTTP
 - se trimite cererea, se asteapta raspuns
@@ -33,7 +99,7 @@ Comanda login:
   altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda enter_library:
+### Comanda enter_library:
 - verifica daca utilizatorul s-a logat anterior; daca nu a facut-o, ignora
   comanda, afiseaza un mesaj de eroare
 - se adauga Session-Cookie la mesaj, se compune mesajul HTTP
@@ -43,7 +109,7 @@ Comanda enter_library:
   eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda get_books:
+### Comanda get_books:
 - se verifica daca exista un JWT Token in memorie, daca nu, inseamna ca nu s-a
   cerut/obtinut acces la biblioteca, se afiseaza un mesaj de eroare, se ignora
   comanda
@@ -54,7 +120,7 @@ Comanda get_books:
   sfarsit de lista, altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda get_book:
+### Comanda get_book:
 - se verifica daca exista un JWT Token in memorie, daca nu, inseamna ca nu s-a
   cerut/obtinut acces la biblioteca, se afiseaza un mesaj de eroare, se ignora
   comanda
@@ -67,7 +133,7 @@ Comanda get_book:
   descrierea acesteia
 - se elibereaza memoria
 
-Comanda add_book:
+### Comanda add_book:
 - se verifica daca exista un JWT Token in memorie, daca nu, inseamna ca nu s-a
   cerut/obtinut acces la biblioteca, se afiseaza un mesaj de eroare, se ignora
   comanda
@@ -80,7 +146,7 @@ Comanda add_book:
   confirmare, altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda delete_book:
+### Comanda delete_book:
 - se verifica daca exista un JWT Token in memorie, daca nu, inseamna ca nu s-a
   cerut/obtinut acces la biblioteca, se afiseaza un mesaj de eroare, se ignora
   comanda
@@ -92,7 +158,7 @@ Comanda delete_book:
   confirmare, altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda logout:
+### Comanda logout:
 - se verifica daca s-a realizat un login inainte; daca nu, se ignora comanda
 - se adauga Session-Cookie la mesaj, se compune mesajul HTTP
 - se trimite cererea, se asteapta raspuns
@@ -101,7 +167,7 @@ Comanda logout:
   Session-Cookie, altfel se parseaza eroarea si se afiseaza descrierea acesteia
 - se elibereaza memoria
 
-Comanda exit:
+### Comanda exit:
 - inchide conexiunea cu serverul
 - inchide executia programului
 
